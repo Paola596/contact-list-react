@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./views/home";
+import { Contacts } from "./views/contacts";
 import { AddNew } from "./views/addNew";
 // import { Single } from "./views/single";
 import injectContext from "./store/appContext";
@@ -20,7 +20,7 @@ const Layout = () => {
 		<div>
 			<BrowserRouter basename={basename}>
 					<Routes>
-						<Route path="/contact-detail/:id" element={<Home />} />
+						<Route path="/contact-detail/:id" element={<Contacts />} />
 						<Route path="/" element={<AddNew />} />
 						<Route path="*" element={<h1>404 Not found!</h1>} />
 					</Routes>

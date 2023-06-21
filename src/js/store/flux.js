@@ -1,19 +1,25 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			contacts: [],
-			url: "https://assets.breatheco.de/apis/fake/contact"
+			contact: [
+				fullName= "",
+				email="",
+				phoneNumber="",
+				address="",
+			],
+
+			url: "https://assets.breatheco.de/apis/fake"
 			},
 
 		actions: {
 			handleFetch: async () => {
 				const store = getStore()
 
-				const response = await fetch ('${store.url}/contacts')
+				const response = await fetch ('${store.url}/contact')
 				const data = await response.json()
 
 				setStore ({
-					contacts: data.results
+					contact: data.results
 				})
 			}
 		}
