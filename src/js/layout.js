@@ -19,16 +19,11 @@ const Layout = () => {
 	return (
 		<div>
 			<BrowserRouter basename={basename}>
-				{/* <ScrollToTop> */}
-					{/* <Navbar /> */}
 					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/addNew" element={<AddNew />} />
-						{/* <Route path="/single/:theid" element={<Single />} /> */}
-						<Route path="*" element={<h1>Not found!</h1>} />
+						<Route path="/contact-detail/:id" element={<Home />} />
+						<Route path="/" element={<AddNew />} />
+						<Route path="*" element={<h1>404 Not found!</h1>} />
 					</Routes>
-					{/* <Footer /> */}
-				{/* </ScrollToTop> */}
 			</BrowserRouter>
 		</div>
 	);

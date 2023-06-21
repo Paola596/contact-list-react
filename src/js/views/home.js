@@ -1,27 +1,18 @@
-import React from "react";
-
-// import "../../styles/home.css";
+import React, {useEffect, useState, useContext} from "react";
+import {Context} from "../store/appContext.js"
+import { Link } from "react-router-dom";
+import {useParams} from "react-router"
 
 export const Home = () => {
-
+	const params = useParams()
 
 	return (
-		<div className= container>
-			<div className="mb-3">
-				<label for="fullName" class="form-label">Full Name</label>
-				<input type="text" class="form-control" id="fullName" placeholder="Name LastName">
-			</div>
-			<div className="mb-3">
-				<label for="email" class="form-label">Email address</label>
-				<input type="email" class="form-control" id="email" placeholder="name@example.com">
-			</div>
-			<div className="mb-3">
-				<label for="phone" class="form-label">Phone Number</label>
-				<input type="text" class="form-control" id="phone" placeholder="xxxx-xxx-xx-xx">
-			</div>
-			<div className="mb-3">
-				<label for="adress" class="form-label">Address</label>
-				<input type="text" class="form-control" id="adress" placeholder="City, Country">
+		<div className="card mb-3" style="width: 18rem;">
+			<Link to={} class="btn btn-primary">Add New Contact </Link>
+			<div className="card-body">
+			    <img src="..." class="card-img-top" alt="...">
+				<h5 className="card-title">Special title treatment</h5>
+				<p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
 			</div>
 		</div>
 	);
