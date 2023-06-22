@@ -1,40 +1,111 @@
-import React, {useEffect, useState, useContext} from "react";
-import { Context } from "../store/appContext.js"
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Context } from "../store/appContext.js";
+
 
 export const AddNew = () => {
-	const {actions, store} = useContext(Context)
+  const { actions, store } = useContext(Context);
+  const params = useParams()
 
-	useEffect(()=> {
-		actions.handleFetch()
-	},[])
-	
-	// return(
-	// 	// <div className=container>
-	// 	// 	{/* <div className="row mb-3">
-	// 	// 		<label for="fullName" className="form-label">Full Name</label>
-	// 	// 		<input type="text" onChange={(e) => setNameValue({...nameValue, [e.target.name]: e.target.value})} 
-	// 	// 		value = {nameValue.label} name = "fullName" placeholder="Name LastName"/>
-	// 	// 	</div>
-	// 	// 	<div className="row mb-3">
-	// 	// 		<label for="email" className="form-label">Email address</label>
-	// 	// 		<input type="text" onChange={(e) => setEmailValue({...emailValue, [e.target.name]: e.target.value})} 
-	// 	// 		value = {emailValue.label} name = "email" placeholder="example@email.com"/>
-	// 	// 	</div>
-	// 	// 	<div className="row mb-3">
-	// 	// 		<label for="phone" className="form-label">Phone Number</label>
-	// 	// 		<input type="text" onChange={(e) => setNumberValue({...numberValue, [e.target.name]: e.target.value})} 
-	// 	// 		value = {numberValue.label} name = "phone" placeholder="0123-4567890"/>
-	// 	// 	</div>
-	// 	// 	<div className="row mb-3">
-	// 	// 		<label for="address" className="form-label">Address</label>
-	// 	// 		<input type="text" onChange={(e) => setAddressValue({...addressValue, [e.target.name]: e.target.value})} 
-	// 	// 		value = {addressValue.label} name = "address" placeholder="City, Country"/>
-	// 	// 	</div>
-	// 	// 	<div class="row d-grid gap-2">
-	// 	// 		<button className="btn btn-primary" type="button">Save</button>
-	// 	// 	</div> */}
-	// 	// 	<Link to= {'/contact-detail/${oneContact.id}'}>or get back to contacts</Link>
-	// 	// </div>
-	// );
-}
+  const [newContact, setNewContact] = useState({
+    full_name: "",
+    email: "",
+    agenda_slug: "paolita",
+    address: "",
+    phone: "",
+  });
+
+  const [success, setSuccess] = useState(false)
+
+  function findContact() {
+		let exists = store.contacts.find((item) => item.id == params.contactId)
+		if (exists) {
+			setNewContact(
+				exists
+			)
+		}
+	}
+  
+  const handleChange = (event) => {
+    setNewContact({ ...newContact, [event.target.name]: event.target.value });
+  };
+
+  
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    let response = await actions.createContact(newContact);
+    
+    if (response == 200){
+      setSuccess(true)
+        setTimeout(() => {
+          setSuccess(false)
+        }, 10000);
+    }
+  };
+
+  useEffect(() => {
+		if (params.contactId) {
+			findContact()
+		}
+	}, [])
+
+  return (
+    <div className="container mt-4">
+      <h1 className="text-center">Add a New Contact</h1>
+      { success && <div class="alert alert-success" role="alert">Se ha creado el contacto</div> }
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Full Name</label>
+          <input
+            className="form-control"
+            type="text"
+            name="full_name"
+            placeholder="Name"
+            value={newContact.full_name}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Email</label>
+          <input
+            className="form-control"
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={newContact.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Phone</label>
+          <input
+            className="form-control"
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            value={newContact.phone}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Address</label>
+          <input
+            className="form-control"
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={newContact.address}
+            onChange={handleChange}
+          />
+        </div>
+        
+        <button className="btn btn-primary col-12" type="submit">
+          Save
+        </button>
+      </form>
+      <Link to="/"> or get back to contacts</Link>
+    </div>
+  );
+};
