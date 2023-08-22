@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			URLBASE: 'https://assets.breatheco.de/apis/fake/contact/',
+			URLBASE: 'https://playground.4geeks.com/apis/fake/contact',
 			contacts: [],
 			id: ""
 			
@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getContact: async () => {
 				const store = getStore()
 				try{
-					let response = await fetch(`${store.URLBASE}agenda/paolita`)
+					let response = await fetch(`${store.URLBASE}/agenda/paolita`)
 					let data = await response.json()
 		
 					if(response.status == 404){
@@ -67,7 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			deleteContact: async (id) => {
 				const store = getStore()
 				try{
-					let response = await fetch(`${store.URLBASE}${id}`, {
+					let response = await fetch(`${store.URLBASE}/${id}`, {
 						method:"DELETE",
 					})
 					
@@ -90,7 +90,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore()
 				
 				try {
-					let response = await fetch(`${store.URLBASE}${id}`, {
+					let response = await fetch(`${store.URLBASE}/${id}`, {
 						method: "PUT",
 						headers: {
 							"Content-type": "application/json"
